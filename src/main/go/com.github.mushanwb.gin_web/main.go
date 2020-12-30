@@ -1,13 +1,10 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"gin_web/src/main/go/com.github.mushanwb.gin_web/bootstrap"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r := bootstrap.SetupRoute()
 	r.Run(":8080")
 }
