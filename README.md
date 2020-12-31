@@ -12,3 +12,12 @@
 ```go
  go get github.com/stretchr/testify
 ```
+
+> mysql    
+```go
+ // GORM
+ go get -u gorm.io/gorm
+
+ // GORM 的 MySQL 的数据库驱动
+ go get -u gorm.io/driver/mysql
+```
