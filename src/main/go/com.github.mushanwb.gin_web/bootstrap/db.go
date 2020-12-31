@@ -1,16 +1,16 @@
 package bootstrap
 
 import (
-	"fmt"
+	c "gin_web/src/main/go/com.github.mushanwb.gin_web/Utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
 )
 
-func SetupDB() {
-	db, err := ConnectDB()
+var DB *gorm.DB
 
-	fmt.Println(err)
+func SetupDB() {
+	db, _ := ConnectDB()
 
 	// 命令行打印数据库请求的信息
 	sqlDB, _ := db.DB()
@@ -24,8 +24,14 @@ func SetupDB() {
 }
 
 func ConnectDB() (*gorm.DB, error) {
-	dsn := "homestead:secret@tcp(192.168.10.10:3306)/gin_web?charset=utf8&parseTime=True&loc=Local"
+	var err error
+	host := c.GetString("database.mysql.host")
+	port := c.GetString("database.mysql.port")
+	database := c.GetString("database.mysql.database")
+	username := c.GetString("database.mysql.username")
+	password := c.GetString("database.mysql.password")
+	dsn := username + ":" + password + "@tcp(" + host + ":" + port + ")/" + database + "?charset=utf8&parseTime=True&loc=Local"
 
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	return db, err
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	return DB, err
 }

@@ -16,5 +16,5 @@
 
 .idea
 
-src/main/go/com.github.mushanwb.gin_web/.env
-src/test/go/com.github.mushanwb.gin_web/.env
+.env
+.env_test
