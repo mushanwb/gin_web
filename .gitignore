@@ -17,4 +17,4 @@
 .idea
 
 .env
-.env_test
+src/test/go/com.github.mushanwb.gin_web/.env_test

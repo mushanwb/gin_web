@@ -11,10 +11,11 @@ var DefaultDB *gorm.DB
 
 func SetupDB() {
 	defaultConfig := c.Get("database.default")
-	DefaultDB = ConnectDB(defaultConfig.(map[string]interface{}))
+	DefaultDB, _ = ConnectDB(defaultConfig.(map[string]interface{}))
 }
 
-func ConnectDB(mysqlConfig map[string]interface{}) *gorm.DB {
+func ConnectDB(mysqlConfig map[string]interface{}) (*gorm.DB, error) {
+	var err error
 	host, _ := mysqlConfig["host"].(string)
 	port, _ := mysqlConfig["port"].(string)
 	database, _ := mysqlConfig["database"].(string)
@@ -22,7 +23,7 @@ func ConnectDB(mysqlConfig map[string]interface{}) *gorm.DB {
 	password, _ := mysqlConfig["password"].(string)
 
 	dsn := username + ":" + password + "@tcp(" + host + ":" + port + ")/" + database + "?charset=utf8&parseTime=True&loc=Local"
-	db, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	// 命令行打印数据库请求的信息
 	sqlDB, _ := db.DB()
@@ -34,5 +35,5 @@ func ConnectDB(mysqlConfig map[string]interface{}) *gorm.DB {
 	// 设置每个链接的过期时间
 	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
-	return db
+	return db, err
 }
