@@ -6,7 +6,7 @@ import (
 
 func init() {
 	Utils.Add("database", Utils.StrMap{
-		"mysql": map[string]interface{}{
+		"default": map[string]interface{}{
 			// 数据库连接信息
 			"host":     Utils.Env("DB_HOST", "127.0.0.1"),
 			"port":     Utils.Env("DB_PORT", "3306"),
