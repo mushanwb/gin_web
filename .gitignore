@@ -18,3 +18,4 @@
 
 .env
 src/test/go/com.github.mushanwb.gin_web/.env_test
+logs
