@@ -3,6 +3,7 @@ package bootstrap
 import (
 	u "gin_web/src/main/go/com.github.mushanwb.gin_web/Utils"
 	"gin_web/src/main/go/com.github.mushanwb.gin_web/logger"
+	"gin_web/src/main/go/com.github.mushanwb.gin_web/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
@@ -13,6 +14,7 @@ var DefaultDB *gorm.DB
 func SetupDB() {
 	defaultConfig := u.Get("database.default")
 	DefaultDB, _ = ConnectDB(defaultConfig.(map[string]interface{}))
+	migration(DefaultDB)
 }
 
 func ConnectDB(mysqlConfig map[string]interface{}) (*gorm.DB, error) {
@@ -41,4 +43,13 @@ func ConnectDB(mysqlConfig map[string]interface{}) (*gorm.DB, error) {
 	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
 	return db, err
+}
+
+func migration(db *gorm.DB) {
+
+	// 自动迁移
+	db.AutoMigrate(
+		&model.User{},
+	)
+
 }
