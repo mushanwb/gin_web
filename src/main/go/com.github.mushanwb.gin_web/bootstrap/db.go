@@ -1,7 +1,8 @@
 package bootstrap
 
 import (
-	c "gin_web/src/main/go/com.github.mushanwb.gin_web/Utils"
+	u "gin_web/src/main/go/com.github.mushanwb.gin_web/Utils"
+	"gin_web/src/main/go/com.github.mushanwb.gin_web/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
@@ -10,7 +11,7 @@ import (
 var DefaultDB *gorm.DB
 
 func SetupDB() {
-	defaultConfig := c.Get("database.default")
+	defaultConfig := u.Get("database.default")
 	DefaultDB, _ = ConnectDB(defaultConfig.(map[string]interface{}))
 }
 
@@ -24,6 +25,10 @@ func ConnectDB(mysqlConfig map[string]interface{}) (*gorm.DB, error) {
 
 	dsn := username + ":" + password + "@tcp(" + host + ":" + port + ")/" + database + "?charset=utf8&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		logger.Logger.Error(err)
+	}
 
 	// 命令行打印数据库请求的信息
 	sqlDB, _ := db.DB()

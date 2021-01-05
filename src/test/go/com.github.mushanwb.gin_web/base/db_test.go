@@ -2,6 +2,7 @@ package base
 
 import (
 	"gin_web/src/main/go/com.github.mushanwb.gin_web/bootstrap"
+	_ "gin_web/src/main/go/com.github.mushanwb.gin_web/logger"
 	"gin_web/src/test/go/com.github.mushanwb.gin_web/data"
 	"github.com/stretchr/testify/assert"
 	"testing"
