@@ -7,5 +7,4 @@ func ReturnJson(c *gin.Context, code int, message string, data interface{}) {
 		"message": message,
 		"data":    data,
 	})
-	return
 }

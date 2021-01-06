@@ -9,5 +9,6 @@ func RegisterApiRoutes(r *gin.Engine) {
 
 	c := new(controller.BaseController)
 	r.GET("/ping", c.Ping)
+	r.POST("/register", c.Register)
 
 }
